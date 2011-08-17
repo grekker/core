@@ -312,16 +312,19 @@ class View {
 	 *     $view->set_filename($file);
 	 *
 	 * @param   string  view filename
+	 * @param   string  view filename extension
 	 * @return  View
 	 * @throws  Fuel_Exception
 	 */
-	public function set_filename($file)
+	public function set_filename($file, $extension = null)
 	{
 		// set find_file's one-time-only search paths
 		\Fuel::$volatile_paths = $this->request_paths;
 
+		$extension = $extension ?: '.' . $this->extension;
+
 		// locate the view file
-		if (($path = \Fuel::find_file('views', $file, '.'.$this->extension, false, false)) === false)
+		if (($path = \Fuel::find_file('views', $file, $extension, false, false)) === false)
 		{
 			throw new \Fuel_Exception('The requested view could not be found: '.\Fuel::clean_path($file));
 		}
